@@ -13,7 +13,7 @@ class ExploreItemTableViewCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 2
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         return stackView
     }()
     
@@ -47,6 +47,7 @@ class ExploreItemTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -69,18 +70,19 @@ class ExploreItemTableViewCell: UITableViewCell {
     func setUI() {
         contentView.addSubview(backgroundImageView)
         contentView.addSubview(stackView)
-        contentView.addSubview(exploreContentView)
         setBackgroundImageViewConstraints()
         
-        exploreContentView.translatesAutoresizingMaskIntoConstraints = false
-        exploreContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        exploreContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
+        
         
         stackView.addArrangedSubview(topDescriptionLabel)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(promoMessage)
         stackView.addArrangedSubview(bottomDescription)
         stackView.addArrangedSubview(exploreContentView)
+        
+        exploreContentView.translatesAutoresizingMaskIntoConstraints = false
+        exploreContentView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0).isActive = true
+        exploreContentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0).isActive = true
         
         setStackViewConstraints()
     }
@@ -107,9 +109,7 @@ class ExploreItemTableViewCell: UITableViewCell {
         topDescriptionLabel.text = exploreItem.topDescription
         titleLabel.text = exploreItem.title
         promoMessage.text = exploreItem.promoMessage
-        if let bottomText = exploreItem.bottomDescription?.htmlToString {
-            bottomDescription.text = bottomText
-        }
+        bottomDescription.text = exploreItem.bottomDescription?.htmlToString
         if let contents = exploreItem.content {
             exploreContentView.updateWith(contents: contents)
         }

@@ -11,8 +11,20 @@ class ANFExploreCardTableViewControllerTests: XCTestCase {
 
     var testInstance: ANFExploreCardTableViewController!
     
+    private var exploreData: [ExploreItem]? {
+        if let filePath = Bundle.main.path(forResource: "exploreData", ofType: "json"),
+           let fileContent = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
+           let jsonDictionary = try? JSONDecoder().decode([ExploreItem].self, from: fileContent) {
+            return jsonDictionary
+        }
+        return nil
+    }
+    
     override func setUp() {
         testInstance = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController() as? ANFExploreCardTableViewController
+        let exploreManager = MockedExploreItemsManager()
+        exploreManager.overrideExploreItems = exploreData
+        testInstance.exploreItemsManager = exploreManager
     }
 
     func test_numberOfSections_ShouldBeOne() {

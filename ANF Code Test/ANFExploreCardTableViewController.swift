@@ -6,15 +6,9 @@
 import UIKit
 
 class ANFExploreCardTableViewController: UITableViewController {
-
-    private var exploreData: [ExploreItem]? {
-        if let filePath = Bundle.main.path(forResource: "exploreData", ofType: "json"),
-           let fileContent = try? Data(contentsOf: URL(fileURLWithPath: filePath)),
-           let jsonDictionary = try? JSONDecoder().decode([ExploreItem].self, from: fileContent) {
-            return jsonDictionary
-        }
-        return nil
-    }
+    // MARK: Properties
+    var exploreItemsManager: ExploreManagerProtocol = ExploreManager(session: URLSession.shared)
+    var exploreData: [ExploreItem]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +16,29 @@ class ANFExploreCardTableViewController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableView.automaticDimension
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenAppIsActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        exploreItemsManager.fetchAllExploreItems { [weak self ] exploreItems in
+            self?.exploreData = exploreItems
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @objc func fetchDataWhenAppIsActive() {
+        exploreItemsManager.fetchAllExploreItems { [weak self ] exploreItems in
+            self?.exploreData = exploreItems
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: tableview data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         exploreData?.count ?? 0
     }

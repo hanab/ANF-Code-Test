@@ -103,9 +103,7 @@ class ExploreItemTableViewCell: UITableViewCell {
     }
     
     func updateWith(exploreItem: ExploreItem) {
-        if let image = UIImage(named: exploreItem.backgroundImage) {
-            backgroundImageView.image = image
-        }
+        backgroundImageView.loadImageUsingCacheWithURLString(exploreItem.backgroundImage, placeHolder: UIImage(named: "anf-20160527-app-m-shirts"))
         topDescriptionLabel.text = exploreItem.topDescription
         titleLabel.text = exploreItem.title
         promoMessage.text = exploreItem.promoMessage

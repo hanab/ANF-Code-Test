@@ -16,23 +16,25 @@ class ANFExploreCardTableViewController: UITableViewController {
         return nil
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.register(ExploreItemTableViewCell.self, forCellReuseIdentifier: "exploreContentCell")
+        tableView.separatorStyle = .none
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         exploreData?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "exploreContentCell", for: indexPath)
-        if let titleLabel = cell.viewWithTag(1) as? UILabel,
-           let titleText = exploreData?[indexPath.row].title {
-            titleLabel.text = titleText
+        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "exploreContentCell", for: indexPath) as? ExploreItemTableViewCell else {
+            return UITableViewCell()
         }
-        
-        if let imageView = cell.viewWithTag(2) as? UIImageView,
-           let name = exploreData?[indexPath.row].backgroundImage,
-           let image = UIImage(named: name) {
-            imageView.image = image
+        if let exploreItems = exploreData {
+            cell.updateWith(exploreItem: exploreItems[indexPath.row])
         }
-        
         return cell
     }
 }

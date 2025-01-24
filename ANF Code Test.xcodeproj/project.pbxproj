@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		33E614AB2D43EFFC00728B68 /* ExploreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E614AA2D43EFFC00728B68 /* ExploreItem.swift */; };
+		33E614AE2D43F13400728B68 /* Extensions+String+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E614AD2D43F13400728B68 /* Extensions+String+UIFont.swift */; };
+		33E614B32D43F18600728B68 /* ContentButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E614B02D43F18600728B68 /* ContentButtonsView.swift */; };
+		33E614B42D43F18600728B68 /* ExploreItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E614B12D43F18600728B68 /* ExploreItemTableViewCell.swift */; };
+		33E614B52D43F18600728B68 /* ContentButtonsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E614AF2D43F18600728B68 /* ContentButtonsStackView.swift */; };
 		3E4AB93A2676D86100C79456 /* exploreData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3E4AB9392676D86100C79456 /* exploreData.json */; };
 		3E727ED326727088006C11AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E727ED226727088006C11AC /* AppDelegate.swift */; };
 		3E727ED526727088006C11AC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E727ED426727088006C11AC /* SceneDelegate.swift */; };
@@ -30,6 +34,10 @@
 
 /* Begin PBXFileReference section */
 		33E614AA2D43EFFC00728B68 /* ExploreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExploreItem.swift; path = "../ANF Code Test1/ANF Code Test/Models/ExploreItem.swift"; sourceTree = SOURCE_ROOT; };
+		33E614AD2D43F13400728B68 /* Extensions+String+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+String+UIFont.swift"; sourceTree = "<group>"; };
+		33E614AF2D43F18600728B68 /* ContentButtonsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentButtonsStackView.swift; sourceTree = "<group>"; };
+		33E614B02D43F18600728B68 /* ContentButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentButtonsView.swift; sourceTree = "<group>"; };
+		33E614B12D43F18600728B68 /* ExploreItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreItemTableViewCell.swift; sourceTree = "<group>"; };
 		3E4AB9392676D86100C79456 /* exploreData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exploreData.json; sourceTree = "<group>"; };
 		3E727ECF26727088006C11AC /* ANF Code Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ANF Code Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E727ED226727088006C11AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +78,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		33E614AC2D43F10B00728B68 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				33E614AD2D43F13400728B68 /* Extensions+String+UIFont.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		33E614B22D43F18600728B68 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				33E614AF2D43F18600728B68 /* ContentButtonsStackView.swift */,
+				33E614B02D43F18600728B68 /* ContentButtonsView.swift */,
+				33E614B12D43F18600728B68 /* ExploreItemTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3E727EC626727088006C11AC = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +117,8 @@
 		3E727ED126727088006C11AC /* ANF Code Test */ = {
 			isa = PBXGroup;
 			children = (
+				33E614B22D43F18600728B68 /* Views */,
+				33E614AC2D43F10B00728B68 /* Extensions */,
 				33E614A92D43EFA900728B68 /* Models */,
 				3E727F02267281F7006C11AC /* ANFExploreCardTableViewController.swift */,
 				3E727ED226727088006C11AC /* AppDelegate.swift */,
@@ -215,7 +243,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E727F03267281F7006C11AC /* ANFExploreCardTableViewController.swift in Sources */,
+				33E614AE2D43F13400728B68 /* Extensions+String+UIFont.swift in Sources */,
 				3E727ED326727088006C11AC /* AppDelegate.swift in Sources */,
+				33E614B32D43F18600728B68 /* ContentButtonsView.swift in Sources */,
+				33E614B42D43F18600728B68 /* ExploreItemTableViewCell.swift in Sources */,
+				33E614B52D43F18600728B68 /* ContentButtonsStackView.swift in Sources */,
 				33E614AB2D43EFFC00728B68 /* ExploreItem.swift in Sources */,
 				3E727ED526727088006C11AC /* SceneDelegate.swift in Sources */,
 			);

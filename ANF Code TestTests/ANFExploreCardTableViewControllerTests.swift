@@ -26,14 +26,48 @@ class ANFExploreCardTableViewControllerTests: XCTestCase {
     }
     
     func test_cellForRowAtIndexPath_titleText_shouldNotBeBlank() {
-        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        let title = firstCell.viewWithTag(1) as? UILabel
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let title = firstCell?.titleLabel
         XCTAssert(title?.text?.count ?? 0 > 0, "title should not be blank")
+        XCTAssert(title?.font == UIFont.systemFont(ofSize: 17).bold(), "font should be size 17 bold")
     }
     
     func test_cellForRowAtIndexPath_ImageViewImage_shouldNotBeNil() {
-        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        let imageView = firstCell.viewWithTag(2) as? UIImageView
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let imageView = firstCell?.backgroundImageView
         XCTAssert(imageView?.image != nil, "image view image should not be nil")
+    }
+    
+    func test_cellForRowAtIndexPath_topDescriptionText_shouldNotBeBlank() {
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let topDescriptionLabel = firstCell?.topDescriptionLabel
+        XCTAssert(topDescriptionLabel?.text?.count ?? 0 > 0, "top description should not be blank")
+        XCTAssert(topDescriptionLabel?.font == UIFont.systemFont(ofSize: 13), "font should be size 13")
+    }
+    
+    func test_cellForRowAtIndexPath_promoMessageText_shouldNotBeBlank() {
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let promoMessage = firstCell?.promoMessage
+        XCTAssert(promoMessage?.text?.count ?? 0 > 0, "promo message should not be blank")
+        XCTAssert(promoMessage?.font == UIFont.systemFont(ofSize: 11), "font should be size 11")
+    }
+    
+    func test_cellForRowAtIndexPath_bottomDescriptionText_shouldNotBeBlank() {
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let bottomDescription = firstCell?.bottomDescription
+        XCTAssert(bottomDescription?.text?.count ?? 0 > 0, "bottom description should not be blank")
+        XCTAssert(bottomDescription?.font == UIFont.systemFont(ofSize: 13), "font should be size 13")
+    }
+    
+    func test_cellForRowAtIndexPath_exploreContentView_shouldHaveButtons() {
+        let firstCell = testInstance.tableView(testInstance.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? ExploreItemTableViewCell
+        let exploreContentView = firstCell?.exploreContentView
+        XCTAssert(exploreContentView?.stackView.arrangedSubviews.count == 2, "content view should have two buttons")
+        
+        for view in exploreContentView?.stackView.arrangedSubviews ?? [] {
+            let buttonView = view as? ContentButtonsView
+            XCTAssert(buttonView?.contentButton.titleLabel?.text != nil, "button title should not be balnk")
+            XCTAssert(buttonView?.contentButton.titleLabel?.font == UIFont.systemFont(ofSize: 15), "font should be size 15")
+        }
     }
 }

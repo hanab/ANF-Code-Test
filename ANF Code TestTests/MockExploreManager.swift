@@ -7,6 +7,7 @@
 
 import Foundation
 @testable import ANF_Code_Test
+import UIKit
 
 class MockedExploreItemsManager: ExploreManagerProtocol  {
     
@@ -19,6 +20,7 @@ class MockedExploreItemsManager: ExploreManagerProtocol  {
         if let overrideExploreItems = self.overrideExploreItems {
             completion(overrideExploreItems)
         }
+        fetchCalled = true
     }
     
     func fetchAllExploreItems(url: URL, completion: @escaping ([ExploreItem]?) -> Void) {

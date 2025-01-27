@@ -29,12 +29,18 @@ class ExploreManager: ExploreManagerProtocol {
     func fetchAllExploreItems(url: URL, completion: @escaping ([ExploreItem]?) -> Void) {
         let request = URLRequest(url: url)
         let task = session.sessionDataTask(with: request, completionHandler:  { (data, response, error) -> Void in
+            if let error = error {
+                completion(nil)
+                print("error: ", error)
+                return
+            }
             if let data = data {
                 do {
                     let decodedResponse = try JSONDecoder().decode([ExploreItem].self, from: data)
                     completion(decodedResponse)
                 } catch {
-                   print("error: ", error)
+                    completion(nil)
+                    print("error: ", error)
                }
             }
         })

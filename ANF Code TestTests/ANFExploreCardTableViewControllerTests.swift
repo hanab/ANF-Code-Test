@@ -8,8 +8,11 @@ import XCTest
 @testable import ANF_Code_Test
 
 class ANFExploreCardTableViewControllerTests: XCTestCase {
-
+    
+    // MARK: Properties
     var testInstance: ANFExploreCardTableViewController!
+    var mockExploreManager: MockedExploreItemsManager!
+    var mockImageLoader: MockImageLoader!
     
     private var exploreData: [ExploreItem]? {
         if let filePath = Bundle.main.path(forResource: "exploreData", ofType: "json"),
@@ -20,13 +23,15 @@ class ANFExploreCardTableViewControllerTests: XCTestCase {
         return nil
     }
     
+    // MARK: setup
     override func setUp() {
-        testInstance = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController() as? ANFExploreCardTableViewController
-        let exploreManager = MockedExploreItemsManager()
-        exploreManager.overrideExploreItems = exploreData
-        testInstance.exploreItemsManager = exploreManager
+        mockExploreManager = MockedExploreItemsManager()
+        mockExploreManager.overrideExploreItems = exploreData
+        mockImageLoader = MockImageLoader()
+        testInstance = ANFExploreCardTableViewController.vc(exploreManager: mockExploreManager, imageLoader: mockImageLoader)
+        testInstance.loadViewIfNeeded()
     }
-
+    
     func test_numberOfSections_ShouldBeOne() {
         let numberOfSections = testInstance.numberOfSections(in: testInstance.tableView)
         XCTAssert(numberOfSections == 1, "table view should have 1 section")
@@ -81,5 +86,48 @@ class ANFExploreCardTableViewControllerTests: XCTestCase {
             XCTAssert(buttonView?.contentButton.titleLabel?.text != nil, "button title should not be balnk")
             XCTAssert(buttonView?.contentButton.titleLabel?.font == UIFont.systemFont(ofSize: 15), "font should be size 15")
         }
+    }
+    
+    func testFetchAllExploreItemsCalled() {
+        let expectation = self.expectation(description: "Fetch explore items")
+        testInstance.viewDidLoad()
+        
+        DispatchQueue.main.async {
+            XCTAssertTrue(self.mockExploreManager.fetchCalled, "fetchAllExploreItems should be called")
+            XCTAssertEqual(self.mockExploreManager.overrideExploreItems?.count, 10, "fetchAllExploreItems should set the overrideExploreItems")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+    }
+    
+    func testImageLoading() {
+        let expectation = self.expectation(description: "Image loading completes")
+        testInstance.viewDidLoad()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            XCTAssertNotNil(self.testInstance.images.first ?? nil, "The first image should not be nil")
+            XCTAssertEqual(self.testInstance.images.count, 10, "There should be 2 images loaded")
+            XCTAssertEqual(self.mockImageLoader.loadedImage, UIImage(named: "anf-US-20160415-app-men-essentials"), "The image loaded should be the mock image")
+            
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
+    }
+    
+    func testFetchDataWhenAppIsActive() {
+        let expectation = self.expectation(description: "Fetch data when app becomes active")
+        
+        // Simulate the app becoming active
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        DispatchQueue.main.async {
+            XCTAssertTrue(self.mockExploreManager.fetchCalled, "fetchDataWhenAppIsActive should trigger fetchAllExploreItems")
+            XCTAssertEqual(self.mockExploreManager.overrideExploreItems?.count, 10, "fetchAllExploreItems should set the overrideExploreItems")
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2.0, handler: nil)
     }
 }

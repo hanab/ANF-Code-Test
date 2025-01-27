@@ -1,5 +1,5 @@
 //
-//  Extensions+UIImageView.swift
+//  ImageLoader.swift
 //  ANF Code Test
 //
 //  Created by Hana on 1/24/25.
@@ -12,8 +12,6 @@ import UIKit
 let imageCache = NSCache<NSString, UIImage>()
 
 class ImageLoader: ImageLoaderProtocol {
-    
-    //MARK: extention to load and catch image asynchronously
     func loadImageUsingCacheWithURLString(_ urlString: String,
                                           completion: @escaping (UIImage?) -> Void) {
         if let cachedImage = imageCache.object(forKey: NSString(string: urlString)) {

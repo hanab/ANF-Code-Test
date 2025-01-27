@@ -8,9 +8,20 @@ import UIKit
 class ANFExploreCardTableViewController: UITableViewController {
     
     // MARK: Properties
-    var exploreItemsManager: ExploreManagerProtocol = ExploreManager(session: URLSession.shared)
+    private var exploreManager: ExploreManagerProtocol?
+    private var imageLoader: ImageLoaderProtocol?
     var exploreData: [ExploreItem]?
     var images = [UIImage?]()
+    
+    // MARK: intializer to make it testable
+    static func vc(exploreManager: ExploreManagerProtocol = ExploreManager(session: URLSession.shared),
+                   imageLoader: ImageLoaderProtocol = ImageLoader()) -> ANFExploreCardTableViewController {
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "ANFExploreCardTableViewController") as! ANFExploreCardTableViewController
+        viewController.exploreManager = exploreManager
+        viewController.imageLoader = imageLoader
+        return viewController
+    }
     
     // MARK: lifecycle methods
     override func viewDidLoad() {
@@ -24,7 +35,7 @@ class ANFExploreCardTableViewController: UITableViewController {
         // Used to fetech data eveytime the app is active
         NotificationCenter.default.addObserver(self, selector: #selector(fetchDataWhenAppIsActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
-        exploreItemsManager.fetchAllExploreItems { [weak self ] exploreItems in
+        exploreManager?.fetchAllExploreItems { [weak self ] exploreItems in
             self?.exploreData = exploreItems
             self?.loadImagesForItems()
         }
@@ -53,7 +64,7 @@ class ANFExploreCardTableViewController: UITableViewController {
     
     // MARK: methods
     @objc func fetchDataWhenAppIsActive() {
-        exploreItemsManager.fetchAllExploreItems { [weak self ] exploreItems in
+        exploreManager?.fetchAllExploreItems { [weak self ] exploreItems in
             self?.exploreData = exploreItems
             DispatchQueue.main.async {
                 self?.loadImagesForItems()
@@ -61,14 +72,15 @@ class ANFExploreCardTableViewController: UITableViewController {
         }
     }
     
-    // Used because the tablview reloads before the images finishe downloading
+    // Used because the tablview reloads before the images finish downloading
+    // reload the table only after all images are downloaded to avoid cell height issues in the first load
     // using SDWebImage or Kingfisher could be a better solution
     func loadImagesForItems() {
         guard let exploreData = exploreData else { return}
         let totalItems = exploreData.count
-        images = Array(repeating: UIImage(named: "ANF-2024-060624-M-HP-NewArrivals-USCA-Mens"), count: totalItems)
+        images = Array(repeating: UIImage(named: "anf-20160527-app-m-shirts"), count: totalItems)
         for (index, item) in exploreData.enumerated() {
-            loadImageUsingCacheWithURLString(item.backgroundImage) { [weak self] image in
+            imageLoader?.loadImageUsingCacheWithURLString(item.backgroundImage) { [weak self] image in
                 guard let self = self else { return }
                 
                 // Update the item with the downloaded image

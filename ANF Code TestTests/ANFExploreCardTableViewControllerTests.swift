@@ -116,14 +116,14 @@ class ANFExploreCardTableViewControllerTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
     
-    func testFetchDataWhenAppIsActive() {
+    func testFetchAllExploreItemsWhenAppIsActive() {
         let expectation = self.expectation(description: "Fetch data when app becomes active")
         
         // Simulate the app becoming active
         NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         
         DispatchQueue.main.async {
-            XCTAssertTrue(self.mockExploreManager.fetchCalled, "fetchDataWhenAppIsActive should trigger fetchAllExploreItems")
+            XCTAssertTrue(self.mockExploreManager.fetchCalled, "fetchAllExploreItemsWhenAppIsActive should trigger fetchAllExploreItems")
             XCTAssertEqual(self.mockExploreManager.overrideExploreItems?.count, 10, "fetchAllExploreItems should set the overrideExploreItems")
             expectation.fulfill()
         }

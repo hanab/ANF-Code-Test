@@ -11,7 +11,7 @@ import Foundation
 import Foundation
 
 protocol ExploreManagerProtocol {
-    func fetchAllExploreItems( completion: @escaping ([ExploreItem]?) -> Void)
+    func fetchAllExploreItems(completion: @escaping ([ExploreItem]?) -> Void)
     func fetchAllExploreItems(url: URL, completion: @escaping ([ExploreItem]?) -> Void)
 }
 
@@ -28,7 +28,8 @@ class ExploreManager: ExploreManagerProtocol {
     //MARK: Methods
     func fetchAllExploreItems(url: URL, completion: @escaping ([ExploreItem]?) -> Void) {
         let request = URLRequest(url: url)
-        let task = session.sessionDataTask(with: request, completionHandler:  { (data, response, error) -> Void in
+        let task = session.sessionDataTask(with: request,
+                                           completionHandler:  { (data, response, error) -> Void in
             if let error = error {
                 completion(nil)
                 print("error: ", error)

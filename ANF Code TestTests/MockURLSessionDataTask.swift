@@ -20,6 +20,7 @@ class MockURLSessionDataTask: URLSessionDataTaskProtocol {
 }
 
 class MockURLSession: NetworkSessionProtocol {
+    
     //MARK: Properties
     var mockData: Data?
     var mockError: Error?

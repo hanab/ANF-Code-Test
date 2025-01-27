@@ -90,7 +90,6 @@ class ExploreManagerTest: XCTestCase {
             XCTAssertEqual(exploreItems?.first?.title, "TOPS STARTING AT $12", "First item should be 'TOPS STARTING AT $12'")
             expectation.fulfill()
         }
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
     
@@ -105,7 +104,6 @@ class ExploreManagerTest: XCTestCase {
             XCTAssertEqual(exploreItems?.last?.title, "T-SHIRT DRESSES", "Last item should be 'T-SHIRT DRESSES'")
             expectation.fulfill()
         }
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
     

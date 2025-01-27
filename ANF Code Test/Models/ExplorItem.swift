@@ -8,7 +8,7 @@
 struct ExploreItem: Codable {
     let title: String, backgroundImage: String
     let content: [Content]?
-    let promoMessage, topDescription,bottomDescription: String?
+    let promoMessage, topDescription, bottomDescription: String?
 }
 
 struct Content: Codable {

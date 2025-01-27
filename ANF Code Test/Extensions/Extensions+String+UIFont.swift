@@ -9,6 +9,7 @@ import Foundation
 
 import UIKit
 
+// MARK: font extensionn
 extension UIFont {
     func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {let descriptor = fontDescriptor.withSymbolicTraits(traits)
         return UIFont(descriptor: descriptor!, size: 0) // size 0 means keep the size as it is
@@ -19,6 +20,7 @@ extension UIFont {
     }
 }
 
+// MARK: string extensionn
 extension String {
     var attributedHtmlString: NSAttributedString? {
         try? NSAttributedString(

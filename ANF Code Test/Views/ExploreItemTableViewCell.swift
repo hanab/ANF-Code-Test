@@ -8,19 +8,23 @@
 import UIKit
 
 class ExploreItemTableViewCell: UITableViewCell {
+    
+    // MARK: properties
+    var heightConstraint: NSLayoutConstraint?
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 2
         stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
-    lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
+    lazy var backgroundImageView: ScaleAspectFitImageView = {
+        let imageView = ScaleAspectFitImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -28,18 +32,21 @@ class ExploreItemTableViewCell: UITableViewCell {
     lazy var topDescriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17).bold()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var promoMessage: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -48,15 +55,18 @@ class ExploreItemTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 13)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var exploreContentView: ContentButtonsStackView = {
         let contentView = ContentButtonsStackView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
     
     
+    // MARK: init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
@@ -67,45 +77,44 @@ class ExploreItemTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: lifecycle methods
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        backgroundImageView.image = nil
+        topDescriptionLabel.text = nil
+        titleLabel.text = nil
+        promoMessage.text = nil
+        bottomDescription.text = nil
+        exploreContentView.removeSubviews()
+    }
+    
+    // MARK: methods
     func setUI() {
-        contentView.addSubview(backgroundImageView)
         contentView.addSubview(stackView)
-        setBackgroundImageViewConstraints()
-        
-        
-        
+        setStackViewConstraints()
+        stackView.addArrangedSubview(backgroundImageView)
         stackView.addArrangedSubview(topDescriptionLabel)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(promoMessage)
         stackView.addArrangedSubview(bottomDescription)
         stackView.addArrangedSubview(exploreContentView)
         
-        exploreContentView.translatesAutoresizingMaskIntoConstraints = false
         exploreContentView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0).isActive = true
         exploreContentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0).isActive = true
-        
-        setStackViewConstraints()
-    }
-    
-    func setBackgroundImageViewConstraints() {
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImageView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 4/5).isActive = true
-        backgroundImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
-        backgroundImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        backgroundImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
+        stackView.setCustomSpacing(10, after: promoMessage)
     }
     
     func setStackViewConstraints() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 10).isActive = true
+        let top = stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)
+        top.priority = UILayoutPriority(rawValue: 999)
+        top.isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
-
     }
     
     func updateWith(exploreItem: ExploreItem) {
-        backgroundImageView.loadImageUsingCacheWithURLString(exploreItem.backgroundImage, placeHolder: UIImage(named: "anf-20160527-app-m-shirts"))
         topDescriptionLabel.text = exploreItem.topDescription
         titleLabel.text = exploreItem.title
         promoMessage.text = exploreItem.promoMessage

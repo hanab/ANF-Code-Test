@@ -20,7 +20,6 @@ class MockURLSessionDataTask: URLSessionDataTaskProtocol {
 }
 
 class MockURLSession: NetworkSessionProtocol {
-    
     //MARK: Properties
     var mockData: Data?
     var mockError: Error?
@@ -36,6 +35,13 @@ class MockURLSession: NetworkSessionProtocol {
         mockURL = request.url
         
         completionHandler(mockData, successHttpURLResponse(request: request), mockError)
+        return  mockDataTask as URLSessionDataTaskProtocol
+    }
+    
+    func sessionDataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, (any Error)?) -> Void) -> URLSessionDataTaskProtocol {
+        mockURL = url
+        
+        completionHandler(mockData, nil, mockError)
         return  mockDataTask as URLSessionDataTaskProtocol
     }
 }

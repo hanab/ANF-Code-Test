@@ -102,15 +102,16 @@ class ExploreItemTableViewCell: UITableViewCell {
         
         exploreContentView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0).isActive = true
         exploreContentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0).isActive = true
-        stackView.setCustomSpacing(10, after: promoMessage)
+        stackView.setCustomSpacing(6, after: promoMessage)
+        stackView.setCustomSpacing(20, after: backgroundImageView)
     }
     
     func setStackViewConstraints() {
         let top = stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10)
         top.priority = UILayoutPriority(rawValue: 999)
         top.isActive = true
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
     }
     

@@ -9,9 +9,18 @@ import Foundation
 
 import UIKit
 
-let imageCache = NSCache<NSString, UIImage>()
-
 class ImageLoader: ImageLoaderProtocol {
+    
+    // MARK: properties
+    private var session: NetworkSessionProtocol
+    var imageCache = NSCache<NSString, UIImage>()
+
+    // MARK: init
+    init(session: NetworkSessionProtocol = URLSession.shared) {
+        self.session = session
+    }
+
+    // MARK: methods
     func loadImageUsingCacheWithURLString(_ urlString: String,
                                           completion: @escaping (UIImage?) -> Void) {
         if let cachedImage = imageCache.object(forKey: NSString(string: urlString)) {
@@ -20,14 +29,14 @@ class ImageLoader: ImageLoaderProtocol {
         }
         
         if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+            session.sessionDataTask(with: url, completionHandler: { (data, response, error) in
                 if error != nil {
                     completion(nil)
                     return
                 }
                 if let data = data {
                     if let downloadedImage = UIImage(data: data) {
-                        imageCache.setObject(downloadedImage, forKey: NSString(string: urlString))
+                        self.imageCache.setObject(downloadedImage, forKey: NSString(string: urlString))
                         completion(downloadedImage)
                     }
                 } else {

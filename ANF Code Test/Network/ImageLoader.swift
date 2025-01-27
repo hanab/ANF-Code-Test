@@ -11,7 +11,7 @@ import UIKit
 
 let imageCache = NSCache<NSString, UIImage>()
 
-extension UIViewController {
+class ImageLoader: ImageLoaderProtocol {
     
     //MARK: extention to load and catch image asynchronously
     func loadImageUsingCacheWithURLString(_ urlString: String,
@@ -39,4 +39,8 @@ extension UIViewController {
             }).resume()
         }
     }
+}
+
+protocol ImageLoaderProtocol {
+    func loadImageUsingCacheWithURLString(_ urlString: String, completion: @escaping (UIImage?) -> Void)
 }

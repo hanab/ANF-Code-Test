@@ -100,8 +100,8 @@ class ExploreItemTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(bottomDescription)
         stackView.addArrangedSubview(exploreContentView)
         
-        exploreContentView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0).isActive = true
-        exploreContentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0).isActive = true
+        exploreContentView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20).isActive = true
+        exploreContentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20).isActive = true
         // spacing for the this positons look biger so I added this 
         stackView.setCustomSpacing(6, after: promoMessage)
         stackView.setCustomSpacing(20, after: backgroundImageView)

@@ -9,7 +9,7 @@ import Foundation
 @testable import ANF_Code_Test
 import UIKit
 
-class MockedExploreItemsManager: ExploreManagerProtocol  {
+class MockExploreManager: ExploreManagerProtocol  {
     
     //MARK: Properties
     var fetchCalled = false
@@ -17,9 +17,7 @@ class MockedExploreItemsManager: ExploreManagerProtocol  {
     
     //MARK: Methods
     func fetchAllExploreItems(completion: @escaping ([ExploreItem]?) -> Void) {
-        if let overrideExploreItems = self.overrideExploreItems {
-            completion(overrideExploreItems)
-        }
+        completion(overrideExploreItems)
         fetchCalled = true
     }
     

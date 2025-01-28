@@ -72,9 +72,9 @@ class ImageLoaderTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    func testLoadImageWithCacheMissAndFailure() {
+    func testLoadImageWithFailure() {
         let urlString = "https://example.com/image.jpg"
-        mockSession.mockError = NSError(domain: "com.test", code: -1, userInfo: [NSLocalizedDescriptionKey: "Network Error"])
+        mockSession.mockError = NSError(domain: "NetworkError", code: 500, userInfo: nil)
         
         let expectation = self.expectation(description: "Image loading should fail")
         imageLoader.loadImageUsingCacheWithURLString(urlString) { loadedImage in

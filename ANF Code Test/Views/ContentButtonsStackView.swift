@@ -23,18 +23,17 @@ class ContentButtonsStackView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackView)
-        
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        setupStackViewConstraints()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        setupStackViewConstraints()
+    }
+    
+    // MARK: methods
+    private func setupStackViewConstraints() {
         addSubview(stackView)
         
         stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
@@ -43,7 +42,6 @@ class ContentButtonsStackView: UIView {
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
     }
     
-    // MARK: methods
     func updateWith(contents: [Content]) {
         removeSubviews()
         for content in contents {

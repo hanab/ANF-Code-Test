@@ -79,7 +79,7 @@ class ExploreManagerTest: XCTestCase {
     func testFetchAllExploreItemsWithValidData() {
         let mockData = mockStringData.data(using: .utf8)
         session.mockData = mockData
-        let expectation = self.expectation(description: "Completion handler called")
+        let expectation = self.expectation(description: "Completion handler called with explore items")
         
         guard let url = URL(string: "http://example.com") else {
             fatalError("URL can't be empty")
@@ -96,7 +96,7 @@ class ExploreManagerTest: XCTestCase {
     func testFetchAllExploreItemsWithDefaultURL() {
         let mockData = mockStringData.data(using: .utf8)
         session.mockData = mockData
-        let expectation = self.expectation(description: "Completion handler called")
+        let expectation = self.expectation(description: "Completion handler called with explore items")
         
         exploreManager.fetchAllExploreItems { exploreItems in
             XCTAssertNotNil(exploreItems, "Explore items should not be nil")

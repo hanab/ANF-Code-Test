@@ -10,7 +10,6 @@ import UIKit
 class ExploreItemTableViewCell: UITableViewCell {
     
     // MARK: properties
-    var heightConstraint: NSLayoutConstraint?
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
